@@ -134,5 +134,7 @@ export TRAN_LLM_MODEL=your-model
 
 ## License
 
+This project is licensed under the [MIT License](LICENSE).
+
 The bundled dictionary data is distributed under its own licenses (see the
 table above).

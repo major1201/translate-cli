@@ -127,4 +127,6 @@ export TRAN_LLM_MODEL=your-model
 
 ## 许可证
 
+本项目采用 [MIT License](LICENSE)。
+
 内置词典数据遵循各自的许可证（见上表）。
