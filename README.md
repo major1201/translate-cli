@@ -96,22 +96,22 @@ $ tx -t ja apple          # explicit target language
 ## LLM configuration
 
 LLM translation requires an API key (not needed for `-d`). Configuration is
-read from environment variables; the `TRAN_LLM_*` names take precedence over
+read from environment variables; the `TX_LLM_*` names take precedence over
 the `OPENAI_*` names:
 
 | Variable | Fallback | Default |
 | --- | --- | --- |
-| `TRAN_LLM_API_KEY` | `OPENAI_API_KEY` | — |
-| `TRAN_LLM_BASE_URL` | `OPENAI_BASE_URL` | `https://api.openai.com/v1` |
-| `TRAN_LLM_MODEL` | `OPENAI_MODEL` | `gpt-4o-mini` |
+| `TX_LLM_API_KEY` | `OPENAI_API_KEY` | — |
+| `TX_LLM_BASE_URL` | `OPENAI_BASE_URL` | `https://api.openai.com/v1` |
+| `TX_LLM_MODEL` | `OPENAI_MODEL` | `gpt-4o-mini` |
 
-`TRAN_LLM_BASE_URL` may point to any OpenAI-compatible Chat Completions
+`TX_LLM_BASE_URL` may point to any OpenAI-compatible Chat Completions
 endpoint that supports streaming:
 
 ```sh
-export TRAN_LLM_API_KEY=sk-...
-export TRAN_LLM_BASE_URL=https://your-provider.example.com/v1
-export TRAN_LLM_MODEL=your-model
+export TX_LLM_API_KEY=sk-...
+export TX_LLM_BASE_URL=https://your-provider.example.com/v1
+export TX_LLM_MODEL=your-model
 ```
 
 ## How it works

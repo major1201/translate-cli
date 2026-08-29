@@ -90,22 +90,22 @@ $ tx -t ja apple          # 显式指定目标语言
 
 ## LLM 配置
 
-LLM 翻译需要 API Key（`-d` 模式不需要）。配置从环境变量读取，`TRAN_LLM_*`
+LLM 翻译需要 API Key（`-d` 模式不需要）。配置从环境变量读取，`TX_LLM_*`
 优先于 `OPENAI_*`：
 
 | 变量 | 备选 | 默认值 |
 | --- | --- | --- |
-| `TRAN_LLM_API_KEY` | `OPENAI_API_KEY` | — |
-| `TRAN_LLM_BASE_URL` | `OPENAI_BASE_URL` | `https://api.openai.com/v1` |
-| `TRAN_LLM_MODEL` | `OPENAI_MODEL` | `gpt-4o-mini` |
+| `TX_LLM_API_KEY` | `OPENAI_API_KEY` | — |
+| `TX_LLM_BASE_URL` | `OPENAI_BASE_URL` | `https://api.openai.com/v1` |
+| `TX_LLM_MODEL` | `OPENAI_MODEL` | `gpt-4o-mini` |
 
-`TRAN_LLM_BASE_URL` 可以指向任意支持流式输出的 OpenAI 兼容 Chat
+`TX_LLM_BASE_URL` 可以指向任意支持流式输出的 OpenAI 兼容 Chat
 Completions 端点：
 
 ```sh
-export TRAN_LLM_API_KEY=sk-...
-export TRAN_LLM_BASE_URL=https://your-provider.example.com/v1
-export TRAN_LLM_MODEL=your-model
+export TX_LLM_API_KEY=sk-...
+export TX_LLM_BASE_URL=https://your-provider.example.com/v1
+export TX_LLM_MODEL=your-model
 ```
 
 ## 工作原理

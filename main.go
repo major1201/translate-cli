@@ -24,9 +24,9 @@ func usage() {
 	flag.PrintDefaults()
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Environment:")
-	fmt.Fprintln(os.Stderr, "  TRAN_LLM_API_KEY  API key for LLM translation (or OPENAI_API_KEY)")
-	fmt.Fprintln(os.Stderr, "  TRAN_LLM_BASE_URL Base URL for LLM API (or OPENAI_BASE_URL)")
-	fmt.Fprintln(os.Stderr, "  TRAN_LLM_MODEL    Model name (or OPENAI_MODEL, default: gpt-4o-mini)")
+	fmt.Fprintln(os.Stderr, "  TX_LLM_API_KEY  API key for LLM translation (or OPENAI_API_KEY)")
+	fmt.Fprintln(os.Stderr, "  TX_LLM_BASE_URL Base URL for LLM API (or OPENAI_BASE_URL)")
+	fmt.Fprintln(os.Stderr, "  TX_LLM_MODEL    Model name (or OPENAI_MODEL, default: gpt-4o-mini)")
 }
 
 func run() int {

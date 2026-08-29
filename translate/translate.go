@@ -21,12 +21,12 @@ type LLMConfig struct {
 
 // DefaultConfig reads configuration from environment variables.
 func DefaultConfig() *LLMConfig {
-	apiKey := os.Getenv("TRAN_LLM_API_KEY")
+	apiKey := os.Getenv("TX_LLM_API_KEY")
 	if apiKey == "" {
 		apiKey = os.Getenv("OPENAI_API_KEY")
 	}
 
-	baseURL := os.Getenv("TRAN_LLM_BASE_URL")
+	baseURL := os.Getenv("TX_LLM_BASE_URL")
 	if baseURL == "" {
 		baseURL = os.Getenv("OPENAI_BASE_URL")
 	}
@@ -34,7 +34,7 @@ func DefaultConfig() *LLMConfig {
 		baseURL = "https://api.openai.com/v1"
 	}
 
-	model := os.Getenv("TRAN_LLM_MODEL")
+	model := os.Getenv("TX_LLM_MODEL")
 	if model == "" {
 		model = os.Getenv("OPENAI_MODEL")
 	}
@@ -71,7 +71,7 @@ func New(cfg *LLMConfig) *Translator {
 // also returned.
 func (t *Translator) Translate(text, sourceLang, targetLang string, out io.Writer) (string, error) {
 	if t.config.APIKey == "" {
-		return "", fmt.Errorf("API key not set. Set TRAN_LLM_API_KEY or OPENAI_API_KEY environment variable")
+		return "", fmt.Errorf("API key not set. Set TX_LLM_API_KEY or OPENAI_API_KEY environment variable")
 	}
 
 	prompt := fmt.Sprintf(
