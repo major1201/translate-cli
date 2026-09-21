@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 	"unicode"
@@ -50,6 +51,15 @@ func run() int {
 	}
 
 	text := strings.Join(flag.Args(), " ")
+	if text == "-" {
+		data, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Reading stdin: %v\n", err)
+			return 1
+		}
+		text = string(data)
+	}
+	text = strings.TrimSpace(text)
 	if text == "" {
 		usage()
 		return 1
