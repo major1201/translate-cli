@@ -1,3 +1,4 @@
 /tx
 dict/stardict.csv
 dict/cedict.csv
+dict/us_phonetic.tsv

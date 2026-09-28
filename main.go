@@ -93,7 +93,7 @@ func run() int {
 			entry = dict.Lookup(text)
 		}
 		if entry != nil {
-			printDictEntry(entry)
+			printDictEntry(entry, !zhText)
 			return 0
 		}
 
@@ -114,7 +114,7 @@ func run() int {
 			if len(found) > 0 {
 				fmt.Println("--- Dictionary matches for individual words ---")
 				for _, e := range found {
-					printDictEntry(e)
+					printDictEntry(e, !zhText)
 				}
 				fmt.Println()
 			}
@@ -154,9 +154,18 @@ var exchangeLabels = map[string]string{
 	"1": "类别",
 }
 
-func printDictEntry(e *dict.Entry) {
+func printDictEntry(e *dict.Entry, enPhon bool) {
 	fmt.Printf("📖 %s", e.Word)
-	if e.Phonetic != "" {
+	if enPhon {
+		switch us := dict.USPhonetic(e.Word); {
+		case e.Phonetic != "" && us != "":
+			fmt.Printf("  BrE /%s/, AmE /%s/", normalizePhonetic(e.Phonetic), us)
+		case us != "":
+			fmt.Printf("  AmE /%s/", us)
+		case e.Phonetic != "":
+			fmt.Printf("  BrE /%s/", normalizePhonetic(e.Phonetic))
+		}
+	} else if e.Phonetic != "" {
 		fmt.Printf("  /%s/", e.Phonetic)
 	}
 	fmt.Println()
@@ -184,6 +193,17 @@ func printDictEntry(e *dict.Entry) {
 		}
 		fmt.Printf("   %s：%s\n", label, value)
 	}
+}
+
+// normalizePhonetic rewrites the non-standard glyphs ECDICT uses in its
+// British transcriptions to regular IPA so they read like the US table:
+// the ASCII apostrophe stress mark becomes U+02C8 (ˈ) and the Cyrillic
+// schwa U+04D9 (ә) becomes the IPA schwa U+0259 (ə).
+func normalizePhonetic(ph string) string {
+	return strings.NewReplacer(
+		"ә", "ə",
+		"'", "ˈ",
+	).Replace(ph)
 }
 
 // detectLang guesses the source language of text from its Unicode script.

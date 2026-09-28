@@ -65,7 +65,7 @@ tx [options] <text>
 
 ```sh
 $ tx apple
-📖 apple  /'æpl/
+📖 apple  BrE /ˈæpl/, AmE /ˈæpəl/
    n. 苹果, 家伙
 
 $ tx 德国
@@ -77,7 +77,7 @@ $ tx ドイツ                # auto-detected Japanese → Chinese
 德国
 
 $ tx -d good              # offline dictionary only
-📖 good  /gud/
+📖 good  BrE /gud/, AmE /ˈgʊd/
    n. 善行, 好处, 利益
    a. 好的, 优良的, 上等的, 愉快的, 有益的, 好心的, 慈善的, 虔诚的
    复数：goods

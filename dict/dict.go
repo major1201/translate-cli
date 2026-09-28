@@ -16,6 +16,9 @@ var dataCSV []byte
 //go:embed cedict.csv
 var cedictCSV []byte
 
+//go:embed us_phonetic.tsv
+var usPhoneticTSV []byte
+
 // dataStart / cedictStart are the byte offsets of the first data row (right
 // after the header line) of each CSV. Both CSVs are sorted by lowercased
 // word, so lookups can binary search directly into the embedded bytes.
@@ -328,6 +331,54 @@ func search(data []byte, start int, key string) int {
 		}
 	}
 	return lo
+}
+
+// wordOfTSV extracts the word (everything before the first tab) from one line
+// of us_phonetic.tsv.
+func wordOfTSV(line []byte) string {
+	if i := bytes.IndexByte(line, '\t'); i >= 0 {
+		return string(line[:i])
+	}
+	return ""
+}
+
+// ipaOfTSV extracts the IPA transcription (everything after the first tab)
+// from one line of us_phonetic.tsv.
+func ipaOfTSV(line []byte) string {
+	if i := bytes.IndexByte(line, '\t'); i >= 0 {
+		return string(line[i+1:])
+	}
+	return ""
+}
+
+// searchTSV is search over a headerless TSV table sorted by lowercased word.
+func searchTSV(table []byte, key string) int {
+	lo, hi := 0, len(table)
+	for lo < hi {
+		mid := lo + (hi-lo)/2
+		ls, next, line := findLine(table, 0, mid)
+		if strings.ToLower(wordOfTSV(line)) < key {
+			lo = next
+		} else {
+			hi = ls
+		}
+	}
+	return lo
+}
+
+// USPhonetic returns the American English IPA transcription for word from
+// the embedded us_phonetic.tsv table, or "" if the word has no entry.
+func USPhonetic(word string) string {
+	key := strings.ToLower(word)
+	pos := searchTSV(usPhoneticTSV, key)
+	if pos >= len(usPhoneticTSV) {
+		return ""
+	}
+	_, _, line := findLine(usPhoneticTSV, 0, pos)
+	if strings.ToLower(wordOfTSV(line)) != key {
+		return ""
+	}
+	return ipaOfTSV(line)
 }
 
 // lookup finds word in data (sorted by lowercased word) and parses the
