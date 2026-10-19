@@ -84,7 +84,6 @@ func run() int {
 	dictUseful := (zhText && *targetLang == "en") || (!zhText && *targetLang == "zh")
 
 	var entry *dict.Entry
-	var found []*dict.Entry
 	if !*llmOnly && (*dictOnly || dictUseful) {
 		// 1. Try dictionary lookup first (direction follows the detected text).
 		if zhText {
@@ -96,36 +95,11 @@ func run() int {
 			printDictEntry(entry, !zhText)
 			return 0
 		}
-
-		// Also try each word individually if it's a phrase.
-		words := strings.Fields(text)
-		if len(words) > 1 {
-			for _, w := range words {
-				var e *dict.Entry
-				if zhText {
-					e = dict.LookupZH(w)
-				} else {
-					e = dict.Lookup(w)
-				}
-				if e != nil {
-					found = append(found, e)
-				}
-			}
-			if len(found) > 0 {
-				fmt.Println("--- Dictionary matches for individual words ---")
-				for _, e := range found {
-					printDictEntry(e, !zhText)
-				}
-				fmt.Println()
-			}
-		}
 	}
 
 	// 2. If dictionary-only mode, stop here
 	if *dictOnly {
-		if entry == nil && len(found) == 0 {
-			fmt.Println("Not found in dictionary.")
-		}
+		fmt.Println("Not found in dictionary.")
 		return 0
 	}
 
